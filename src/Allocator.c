@@ -7,10 +7,16 @@
 
 void initialization ()
 {
-	NodeHeader * newHeader = malloc(sizeof(NodeHeader));
+	NodeHeader * newNode = malloc(sizeof(NodeHeader));
+	MemoryBlockHeader *newHeader= malloc(sizeof(MemoryBlockHeader));
 	theMemoryPool = malloc (sizeof(void)*MEMORY_SIZE);
-	newHeader->Header = theMemoryPool;
-	freePool =(NodeHeader*)avlAddHeader(freePool,newHeader);
+	newHeader->address = theMemoryPool;
+	newHeader->size = MEMORY_SIZE;
+	newNode->Header = newHeader;
+	newNode->leftChild=NULL;
+	newNode->rightChild=NULL;
+	newNode->balance =0;
+	freePool =(NodeHeader*)avlAddHeader(freePool,newNode);
 	allocatedPool = NULL;
 	
 	
@@ -35,9 +41,11 @@ MemoryBlockHeader *allocateMemory(int size)
 	
 	newAllocatedHeader->address = freeSpace;
 	newAllocatedHeader->size = size;
-	newAllocatedNode->Header = newHeader;
+	newAllocatedNode->Header = newAllocatedHeader;
 	newAllocatedNode->leftChild=NULL;
 	newAllocatedNode->rightChild=NULL;
+	newAllocatedNode->balance=0;
+	
 	allocatedPool = (NodeHeader*)avlAddHeader(allocatedPool, newAllocatedNode);
 	/**************************************************************************
 	
@@ -46,8 +54,10 @@ MemoryBlockHeader *allocateMemory(int size)
 	***************************************************************************/
 	
 	//Starting on the freePool
+	getMemoryAddress(freePool) += size;
+	getMemorySize(freePool) -= size;
 	
-	return newHeader;
+	return newAllocatedHeader;
 	
 }
 

@@ -5,7 +5,7 @@
 #include "manageAVL.h"
 #include "mock_SupportiveFunction.h"
 
-#define getMemoryAddress(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->Header)->address)
+
 void setUp(void)
 {
 }
@@ -26,7 +26,8 @@ void test_initialization_will_initial_freePool_to_point_to_the_start_location_of
 {
 	initialization();
 	TEST_ASSERT_NOT_NULL(freePool);
-	TEST_ASSERT_EQUAL(theMemoryPool,freePool->Header);
+	TEST_ASSERT_EQUAL(MEMORY_SIZE,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
 	free(theMemoryPool);
 	destroyMemory();
 	
@@ -46,9 +47,21 @@ void test_allocateMemory_will_add_the_first_location_of_the_memory_pool_into_the
 	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(allocatedPool));
 	TEST_ASSERT_NULL(allocatedPool->rightChild);
 	TEST_ASSERT_NULL(allocatedPool->leftChild);
+	destroyMemory();
 	
 }
 
+void test_allocateMemory_will_update_the_freePool_after_data_been_allocated()
+{
+	initialization();
+	findBlock_ExpectAndReturn (50,theMemoryPool);
+	MemoryBlockHeader *testAllocateData;
+	testAllocateData = allocateMemory(50);
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(MEMORY_SIZE-50,getMemorySize(freePool));
+	destroyMemory();
+	
+}
 
 
 

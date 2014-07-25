@@ -6,6 +6,8 @@
 
 #define MEMORY_SIZE (150)
 
+#define getMemoryAddress(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->Header)->address)
+#define getMemorySize(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->Header)->size)
 
 void *theMemoryPool;
 NodeHeader *freePool;
