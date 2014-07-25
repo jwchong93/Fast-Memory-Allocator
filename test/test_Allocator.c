@@ -60,9 +60,24 @@ void test_allocateMemory_will_update_the_freePool_after_data_been_allocated()
 	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool));
 	TEST_ASSERT_EQUAL(MEMORY_SIZE-50,getMemorySize(freePool));
 	destroyMemory();
-	
 }
 
+//allocateMemory test will be added in future.
 
+void test_deallocateMemory_will_remove_the_node_from_the_allocatedPool_and_merge_back_to_the_freePool()
+{
+	//Allocate some data first........
+	initialization();
+	findBlock_ExpectAndReturn (100,theMemoryPool);
+	MemoryBlockHeader *testAllocateData;
+	testAllocateData = allocateMemory(100);
+	//Start to deallocate it and test the freePool and allocatedPool
+	deallocateMemory(theMemoryPool+100);
+	TEST_ASSERT_NULL(allocatedPool);
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(MEMORY_SIZE,getMemorySize(freePool));
+	
+	destroyMemory();
+}
 
 

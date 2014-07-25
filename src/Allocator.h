@@ -4,7 +4,7 @@
 #include "manageAVL.h"
 #include "AVLAddress.h"
 
-#define MEMORY_SIZE (150)
+#define MEMORY_SIZE (500)
 
 #define getMemoryAddress(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->Header)->address)
 #define getMemorySize(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->Header)->size)
@@ -20,5 +20,5 @@ typedef struct{
 
 void initialization ();
 MemoryBlockHeader *allocateMemory(int size);
-void *findBlock(int size);
+void deallocateMemory(void* memoryLocation);
 #endif // Allocator_H

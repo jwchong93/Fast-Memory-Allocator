@@ -5,6 +5,15 @@
 #include "AVLAddress.h"
 #include "SupportiveFunction.h"
 
+/**********************************************************************
+* Initialize the global variables
+*
+*	Input: none
+*	Output: none
+*	
+*	Global variables affected: freePool, allocatedPool, theMemoryPool
+*
+***********************************************************************/
 void initialization ()
 {
 	NodeHeader * newNode = malloc(sizeof(NodeHeader));
@@ -22,6 +31,15 @@ void initialization ()
 	
 }
 
+/*********************************************************************
+* Destroy the data inside the global variables.
+*
+*	Input: none
+*	Output: none
+*
+*	Destroy: freePool,allocatedPool,theMemoryPool
+*	
+**********************************************************************/
 void destroyMemory()
 {
 	free(theMemoryPool);
@@ -29,6 +47,7 @@ void destroyMemory()
 	allocatedPool = NULL;
 }
 
+//This function in developing, will come back to this after finish deallocate.
 MemoryBlockHeader *allocateMemory(int size)
 {
 	void * freeSpace =NULL;
@@ -56,8 +75,24 @@ MemoryBlockHeader *allocateMemory(int size)
 	//Starting on the freePool
 	getMemoryAddress(freePool) += size;
 	getMemorySize(freePool) -= size;
+	/**************************************************************************
 	
+							End of editing freePool
+							
+	***************************************************************************/
 	return newAllocatedHeader;
 	
 }
 
+void deallocateMemory(void* memoryLocation)
+{
+	int size = getMemorySize(allocatedPool);
+	//Edit allocatedPool 
+	free(allocatedPool);
+	allocatedPool=NULL;
+	//Done for allocatedPool
+	//Edit freePool
+	getMemoryAddress(freePool) -= size;
+	getMemorySize(freePool) += size;
+	//Done for freePool
+}
