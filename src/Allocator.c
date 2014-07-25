@@ -88,6 +88,7 @@ void deallocateMemory(void* memoryLocation)
 {
 	int size = getMemorySize(allocatedPool);
 	//Edit allocatedPool 
+	
 	free(allocatedPool);
 	allocatedPool=NULL;
 	//Done for allocatedPool
