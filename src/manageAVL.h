@@ -21,7 +21,7 @@ Node * AVLBalance(Node *root);
 
 Node * avlAdd(Node *root,Node *nodeToAdd,int (*compare)(void*,void*));
 Node * AVLRemove(Node ** root,Node *nodeToRemove);
-Node * AVLFind(Node**,void*data,int(compare*)(Node *node,void *data));
+Node * AVLFind(Node**,void*data,int(*compare)(Node *node,void *data));
 Node * getReplacer(Node ** root);
 
 

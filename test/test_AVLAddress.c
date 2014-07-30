@@ -21,7 +21,7 @@ void test_avlAddHeader_will_add_a_new_element_into_the_root(void)
 	NodeHeader realData = {.Header = &testHeader};
 	testRoot = (NodeHeader*)avlAddHeader(testRoot,&realData);
 	TEST_ASSERT_EQUAL(&realData,testRoot);
-	TEST_ASSERT_EQUAL(&testHeader,getHeaderAddress(testRoot));
+	TEST_ASSERT_EQUAL(&testHeader,getHeaderAddress(testRoot) );
 }
 
 void test_avlAddHeader_will_add_a_new_element_into_the_rightChild_of_the_root(void)
