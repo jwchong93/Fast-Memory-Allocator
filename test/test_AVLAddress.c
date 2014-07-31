@@ -4,7 +4,7 @@
 #include "Allocator.h"
 #include "mock_SupportiveFunction.h"
 
-#define getHeaderAddress(node)	(((MemoryBlockHeader*)(node)->Header))
+#define getHeaderAddress(node)	(((MemoryBlockHeader*)(node)->data))
 
 void setUp(void)
 {
@@ -18,7 +18,7 @@ void test_avlAddHeader_will_add_a_new_element_into_the_root(void)
 {
 	MemoryBlockHeader testHeader={.address=(void*)100};
 	NodeHeader * testRoot=NULL;
-	NodeHeader realData = {.Header = &testHeader};
+	NodeHeader realData = {.data = &testHeader};
 	testRoot = (NodeHeader*)avlAddHeader(testRoot,&realData);
 	TEST_ASSERT_EQUAL(&realData,testRoot);
 	TEST_ASSERT_EQUAL(&testHeader,getHeaderAddress(testRoot) );
@@ -29,8 +29,8 @@ void test_avlAddHeader_will_add_a_new_element_into_the_rightChild_of_the_root(vo
 	MemoryBlockHeader testHeader1={.address=(void*)100};
 	MemoryBlockHeader testHeader2={.address=(void*)200};
 	NodeHeader * testRoot=NULL;
-	NodeHeader realData1 = {.Header = &testHeader1};
-	NodeHeader realData2 = {.Header = &testHeader2};
+	NodeHeader realData1 = {.data = &testHeader1};
+	NodeHeader realData2 = {.data = &testHeader2};
 	testRoot = (NodeHeader*)avlAddHeader(testRoot,&realData1);
 	TEST_ASSERT_EQUAL(&realData1,testRoot);
 	TEST_ASSERT_EQUAL(&testHeader1,getHeaderAddress(testRoot));

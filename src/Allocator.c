@@ -21,7 +21,7 @@ void initialization ()
 	theMemoryPool = malloc (sizeof(void)*MEMORY_SIZE);
 	newHeader->address = theMemoryPool;
 	newHeader->size = MEMORY_SIZE;
-	newNode->Header = newHeader;
+	newNode->data = newHeader;
 	newNode->leftChild=NULL;
 	newNode->rightChild=NULL;
 	newNode->balance =0;
@@ -60,7 +60,7 @@ MemoryBlockHeader *allocateMemory(int size)
 	
 	newAllocatedHeader->address = freeSpace;
 	newAllocatedHeader->size = size;
-	newAllocatedNode->Header = newAllocatedHeader;
+	newAllocatedNode->data = newAllocatedHeader;
 	newAllocatedNode->leftChild=NULL;
 	newAllocatedNode->rightChild=NULL;
 	newAllocatedNode->balance=0;
@@ -88,9 +88,9 @@ void deallocateMemory(void* memoryLocation)
 {
 	int size = getMemorySize(allocatedPool);
 	//Edit allocatedPool 
+	//NEED A FUNCTION AVLFIND TO GET THE NODE ADDRESS BEFORE USE THIS AVLREMOVE
 	
-	free(allocatedPool);
-	allocatedPool=NULL;
+	avlRemoveHeader(allocatedPool, memoryLocation);
 	//Done for allocatedPool
 	//Edit freePool
 	getMemoryAddress(freePool) -= size;

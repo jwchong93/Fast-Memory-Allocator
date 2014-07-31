@@ -20,8 +20,8 @@ Node* doubleLeftRotate(Node *elem);
 Node * AVLBalance(Node *root);
 
 Node * avlAdd(Node *root,Node *nodeToAdd,int (*compare)(void*,void*));
-Node * AVLRemove(Node ** root,Node *nodeToRemove);
-Node * AVLFind(Node**,void*data,int(*compare)(Node *node,void *data));
+Node * AVLRemove(Node ** root,Node *nodeToRemove,int(*compare)(void*,void *));
+Node * AVLFind(Node *root,Node *data,int(*compare)(void*,void *));
 Node * getReplacer(Node ** root);
 
 

@@ -141,7 +141,7 @@ void test_allocatedMemory_will_update_the_pools_correctly_when_three_part_of_mem
 	destroyMemory();
 }
 //allocateMemory test will be added in future.
-
+/*
 void test_deallocateMemory_will_remove_the_node_from_the_allocatedPool_and_merge_back_to_the_freePool()
 {
 	//Allocate some data first........
@@ -149,7 +149,7 @@ void test_deallocateMemory_will_remove_the_node_from_the_allocatedPool_and_merge
 	findBlock_ExpectAndReturn (100,theMemoryPool);
 	MemoryBlockHeader *testAllocateData;
 	testAllocateData = allocateMemory(100);
-	//Start to deallocate it and test the freePool and allocatedPool
+	// Start to deallocate it and test the freePool and allocatedPool
 	deallocateMemory(theMemoryPool+100);
 	TEST_ASSERT_NULL(allocatedPool);
 	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
@@ -176,4 +176,4 @@ void test_deallocateMemory_will_remove_the_node_where_three_parts_of_memory_is_a
 	destroyMemory();
 }
 
-
+*/

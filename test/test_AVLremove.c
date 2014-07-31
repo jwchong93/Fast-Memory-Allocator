@@ -25,7 +25,7 @@ void test_AVLRemove_change_the_root_become_NULL_after_the_last_element_been_remo
 	Node *testNode2=NULL;
 	testNode=avlAddInt(testNode,&N50);
 	
-	testNode2=AVLRemove(&testNode,&N50);
+	testNode2=avlRemoveInt(&testNode,&N50);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode2);
 	TEST_ASSERT_NULL(testNode);
@@ -52,7 +52,7 @@ void test_AVLRemove_change_the_root_become_NULL_after_the_last_element_been_remo
 	testNode=avlAddInt(testNode,&N50);
 	testNode=avlAddInt(testNode,&N25);
 	
-	testNode2=AVLRemove(&testNode,&N50);
+	testNode2=avlRemoveInt(&testNode,&N50);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode2);
 	TEST_ASSERT_NOT_NULL(testNode);
@@ -76,7 +76,7 @@ void test_AVLRemove_will_remove_the_left_child_of_the_root()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N180);
 	
-	testNode2=AVLRemove(&testNode,&N180);
+	testNode2=avlRemoveInt(&testNode,&N180);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N180,testNode2);
 	TEST_ASSERT_NULL(testNode->leftChild);
@@ -100,7 +100,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N180);
 	
-	testNode2=AVLRemove(&testNode,&N250);
+	testNode2=avlRemoveInt(&testNode,&N250);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N250,testNode2);
 	TEST_ASSERT_NULL(testNode->rightChild);
@@ -130,7 +130,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N150);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N150,0,testNode);
@@ -168,7 +168,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N200,1,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N150,&N220,0,testNode->rightChild);
 	
-	testNode2=AVLRemove(&testNode,&N220);
+	testNode2=avlRemoveInt(&testNode,&N220);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N220,testNode2);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N200,1,testNode);
@@ -194,7 +194,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N50);
 	testNode=avlAddInt(testNode,&N200);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
 	
@@ -234,7 +234,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N250);
 	testNode=avlAddInt(testNode,&N220);
 	
-	testNode2=AVLRemove(&testNode,&N250);
+	testNode2=avlRemoveInt(&testNode,&N250);
 	TEST_ASSERT_EQUAL(&N250,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N200,0,testNode);
@@ -271,7 +271,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N150,-1,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N1,NULL,-1,testNode->leftChild);
 	
-	testNode2=AVLRemove(&testNode,&N150);
+	testNode2=avlRemoveInt(&testNode,&N150);
 	TEST_ASSERT_EQUAL(&N150,testNode2);
 	TEST_ASSERT_EQUAL(&N25,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N1,&N50,0,testNode);
@@ -313,7 +313,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N40);
 	testNode=avlAddInt(testNode,&N75);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N100,0,testNode);
@@ -355,7 +355,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N75);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N100,0,testNode);
@@ -396,7 +396,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N40);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N100,0,testNode);
@@ -440,7 +440,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N1);
 	testNode=avlAddInt(testNode,&N50);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	TEST_ASSERT_EQUAL(&N40,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N100,1,testNode);
@@ -477,7 +477,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N150);
 	testNode=avlAddInt(testNode,&N200);
 	
-	testNode2=AVLRemove(&testNode,&N1);
+	testNode2=avlRemoveInt(&testNode,&N1);
 	TEST_ASSERT_NULL(testNode2);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N150,1,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL,&N200,1,testNode->rightChild);
@@ -506,7 +506,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N25);
 	testNode=avlAddInt(testNode,&N150);
 	
-	testNode2=AVLRemove(&testNode,&N25);
+	testNode2=avlRemoveInt(&testNode,&N25);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N25,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -540,7 +540,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N150);
 	testNode=avlAddInt(testNode,&N200);
 	
-	testNode2=AVLRemove(&testNode,&N25);
+	testNode2=avlRemoveInt(&testNode,&N25);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N25,testNode2);
 	TEST_ASSERT_EQUAL(&N150,testNode);
@@ -575,7 +575,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N1);
 	
-	testNode2=AVLRemove(&testNode,&N25);
+	testNode2=avlRemoveInt(&testNode,&N25);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N25,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -619,7 +619,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N120);
 	testNode=avlAddInt(testNode,&N175);
 	
-	testNode2=AVLRemove(&testNode,&N1);
+	testNode2=avlRemoveInt(&testNode,&N1);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N1,testNode2);
 	TEST_ASSERT_EQUAL(&N150,testNode);
@@ -667,7 +667,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	TEST_ASSERT_EQUAL_AVL_Node(&N150,&N220,-1,testNode->rightChild);
 	TEST_ASSERT_EQUAL_AVL_Node(&N120,NULL,-1,testNode->rightChild->leftChild);
 	
-	testNode2=AVLRemove(&testNode,&N1);
+	testNode2=avlRemoveInt(&testNode,&N1);
 	
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N1,testNode2);
@@ -720,7 +720,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	TEST_ASSERT_EQUAL_AVL_Node(&N150,&N220,-1,testNode->rightChild);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL,&N175,1,testNode->rightChild->leftChild);
 	
-	testNode2=AVLRemove(&testNode,&N1);
+	testNode2=avlRemoveInt(&testNode,&N1);
 	
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N1,testNode2);
@@ -765,7 +765,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N175);
 	testNode=avlAddInt(testNode,&N250);
 	
-	testNode2=AVLRemove(&testNode,&N1);
+	testNode2=avlRemoveInt(&testNode,&N1);
 	
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N1,testNode2);
@@ -802,7 +802,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N40);
 		
-	testNode2=AVLRemove(&testNode,&N40);
+	testNode2=avlRemoveInt(&testNode,&N40);
 	
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N40,testNode2);
@@ -840,7 +840,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N40);
 	testNode=avlAddInt(testNode,&N1);
 	
-	testNode2=AVLRemove(&testNode,&N25);
+	testNode2=avlRemoveInt(&testNode,&N25);
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N25,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -884,7 +884,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N250);
 	testNode=avlAddInt(testNode,&N90);
 	
-	testNode2=AVLRemove(&testNode,&N150);
+	testNode2=avlRemoveInt(&testNode,&N150);
 	
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N150,testNode2);
@@ -938,7 +938,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	TEST_ASSERT_EQUAL_AVL_Node(&N40,&N90,0,testNode->leftChild->rightChild);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL,&N250,1,testNode->rightChild);
 	
-	testNode2=AVLRemove(&testNode,&N150);
+	testNode2=avlRemoveInt(&testNode,&N150);
 
 	TEST_ASSERT_NOT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N150,testNode2);
@@ -980,7 +980,7 @@ void test_AVLRemove_will_remove_the_right_child_of_the_root()
 	testNode=avlAddInt(testNode,&N150);
 	testNode=avlAddInt(testNode,&N1);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_NULL(testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N150,-1,testNode);
@@ -1011,7 +1011,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N25);
 	testNode=avlAddInt(testNode,&N150);
 	
-	testNode2=AVLRemove(&testNode,&N150);
+	testNode2=avlRemoveInt(&testNode,&N150);
 	TEST_ASSERT_EQUAL(&N150,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1044,7 +1044,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N150);
 	testNode=avlAddInt(testNode,&N1);
 	
-	testNode2=AVLRemove(&testNode,&N150);
+	testNode2=avlRemoveInt(&testNode,&N150);
 	TEST_ASSERT_EQUAL(&N150,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N25,testNode);
@@ -1080,7 +1080,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N1);
 	testNode=avlAddInt(testNode,&N200);
 	
-	testNode2=AVLRemove(&testNode,&N150);
+	testNode2=avlRemoveInt(&testNode,&N150);
 	TEST_ASSERT_EQUAL(&N150,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1125,7 +1125,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N40);
 	testNode=avlAddInt(testNode,&N75);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1171,7 +1171,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N75);
 	
-		testNode2=AVLRemove(&testNode,&N200);
+		testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1215,7 +1215,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N200);
 	testNode=avlAddInt(testNode,&N40);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1261,7 +1261,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N50);
 	testNode=avlAddInt(testNode,&N1);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N40,testNode);
@@ -1299,7 +1299,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N25);
 	testNode=avlAddInt(testNode,&N150);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1333,7 +1333,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N150);
 	testNode=avlAddInt(testNode,&N220);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1375,7 +1375,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N150);
 	testNode=avlAddInt(testNode,&N175);
 	
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	
 	TEST_ASSERT_EQUAL(&N50,testNode);
@@ -1422,7 +1422,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	testNode=avlAddInt(testNode,&N150);
 	testNode=avlAddInt(testNode,&N175);
 	testNode=avlAddInt(testNode,&N120);
-	testNode2=AVLRemove(&testNode,&N200);
+	testNode2=avlRemoveInt(&testNode,&N200);
 	TEST_ASSERT_EQUAL(&N200,testNode2);
 	TEST_ASSERT_EQUAL(&N50,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N25,&N175,1,testNode);
@@ -1510,7 +1510,7 @@ void test_AVLRemove_will_remove_the_right_node()
 	TEST_ASSERT_EQUAL_AVL_Node(&N450,&N550,1,testNode->rightChild->rightChild); //500
 	TEST_ASSERT_EQUAL_AVL_Node(NULL,&N600,1,testNode->rightChild->rightChild->rightChild); //550
 
-	testNode2=AVLRemove(&testNode,&N400);
+	testNode2=avlRemoveInt(&testNode,&N400);
 	TEST_ASSERT_EQUAL(&N400,testNode2);
 	TEST_ASSERT_EQUAL(&N175,testNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&N100,&N350,0,testNode);
@@ -1547,7 +1547,7 @@ void test_AVLRemove_will_balance_the_tree_after_remove()
 	testRoot=avlAddInt(testRoot,&N190);
 	testRoot=avlAddInt(testRoot,&N150);
 	
-	testNode=AVLRemove(&testRoot,&N250);
+	testNode=avlRemoveInt(&testRoot,&N250);
 	TEST_ASSERT_NOT_NULL(testNode);
 	TEST_ASSERT_EQUAL(&N250,testNode);
 	TEST_ASSERT_EQUAL(&N180,testRoot);
@@ -1589,7 +1589,7 @@ void test_AVLRemove_will_balance_the_tree_after_remove_the_element_at_level_3()
 	testRoot=avlAddInt(testRoot,&N185);
 	testRoot=avlAddInt(testRoot,&N195);
 	
-	testNode=AVLRemove(&testRoot,&N300);
+	testNode=avlRemoveInt(&testRoot,&N300);
 	TEST_ASSERT_NOT_NULL(testNode);
 	TEST_ASSERT_EQUAL(&N300,testNode);
 	TEST_ASSERT_EQUAL(&N190,testRoot);
@@ -1629,7 +1629,7 @@ void test_AVLRemove_will_replace_the_empty_space_of_N250_with_N300()
 	testRoot=avlAddInt(testRoot,&N185);
 	testRoot=avlAddInt(testRoot,&N195);
 	
-	testNode=AVLRemove(&testRoot,&N250);
+	testNode=avlRemoveInt(&testRoot,&N250);
 	TEST_ASSERT_NOT_NULL(testNode);
 	TEST_ASSERT_EQUAL(&N250,testNode);
 	TEST_ASSERT_EQUAL(&N190,testRoot);
@@ -1694,7 +1694,7 @@ void test_AVLRemove_N100_will_replace_by_N75()
 	TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,testRoot->rightChild->rightChild->rightChild);
 	
 	
-	testNode=AVLRemove(&testRoot,&N100);
+	testNode=avlRemoveInt(&testRoot,&N100);
 	TEST_ASSERT_NOT_NULL(testNode);
 	TEST_ASSERT_EQUAL(&N100,testNode);
 	

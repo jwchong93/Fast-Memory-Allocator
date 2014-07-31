@@ -7,10 +7,11 @@ struct NodeHeader{
   int balance;
   NodeHeader *leftChild;
   NodeHeader *rightChild;
-  void *Header;
+  void *data;
 };
 
-#define avlAddHeader(root, nodeToAdd) avlAdd((Node *)(root), (Node *)(nodeToAdd), compareHeader)
-
+#define avlAddHeader(root, nodeToAdd) (NodeHeader*)avlAdd((Node *)(root), (Node *)(nodeToAdd), compareHeader)
+#define avlRemoveHeader(root, nodeToRemove) (NodeHeader*)AVLRemove((Node **) (root),(Node *)(nodeToRemove),compareHeader)
+#define avlFindHeader(root,data) (NodeHeader*)AVLFind((Node *)(root),(Node *) (data),compareHeader)
 int compareHeader(void *nodeInTree, void *nodeToCompare);
 #endif // AVLAddress_H

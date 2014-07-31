@@ -291,13 +291,41 @@ Node * getReplacer(Node ** root)
 	return tempNode;
 	
 }
-Node* AVLRemove(Node **root,Node *nodeToRemove)
+
+Node * AVLFind(Node *root,Node *data,int(*compare)(void*,void *))
+{
+	Node *tempNode=NULL;
+	int compareResult;
+	
+	compareResult = compare(root,data);
+	
+	if(compareResult==0)
+	{
+		tempNode=root;
+	}
+	else if (root->rightChild!=NULL&&compareResult==-1)
+	{
+		tempNode = AVLFind(root->rightChild,data,compare);	
+	}
+	else if (root->leftChild!=NULL&&compareResult==1)
+	{
+		tempNode = AVLFind(root->leftChild,data,compare);
+	}
+		return tempNode;
+}
+
+Node* AVLRemove(Node **root,Node *nodeToRemove,int(*compare)(void*,void *))
 {
 	Node *tempNode=NULL;
 	Node *tempNode2=NULL;
 	Node *checkNode=NULL;
 	int temp;
-	if(nodeToRemove==(*root))
+	
+	int compareResult;
+	
+	compareResult = compare((*root),nodeToRemove);
+	
+	if(compareResult==0)
 	{
 		tempNode=(*root);
 		if((*root)->leftChild!=NULL)
@@ -347,9 +375,9 @@ Node* AVLRemove(Node **root,Node *nodeToRemove)
 		}
 		
 	}
-	else if ((*root)->rightChild!=NULL&&nodeToRemove->data>(*root)->data)
+	else if ((*root)->rightChild!=NULL&&compareResult==-1)
 	{
-		checkNode = AVLRemove(&((*root)->rightChild),nodeToRemove);
+		checkNode = AVLRemove(&((*root)->rightChild),nodeToRemove,compare);
 		if(checkNode!=NULL)
 		{
 			if((*root)->rightChild!=NULL)
@@ -374,9 +402,9 @@ Node* AVLRemove(Node **root,Node *nodeToRemove)
 		}
 				
 	}
-	else if ((*root)->leftChild!=NULL&&nodeToRemove->data<(*root)->data)
+	else if ((*root)->leftChild!=NULL&&compareResult==1)
 	{
-		checkNode = AVLRemove(&((*root)->leftChild),nodeToRemove);
+		checkNode = AVLRemove(&((*root)->leftChild),nodeToRemove,compare);
 		if(checkNode!=NULL)
 		{
 			if((*root)->leftChild!=NULL)

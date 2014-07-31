@@ -6,8 +6,8 @@
 
 #define MEMORY_SIZE (500)
 
-#define getMemoryAddress(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->Header)->address)
-#define getMemorySize(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->Header)->size)
+#define getMemoryAddress(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->data)->address)
+#define getMemorySize(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->data)->size)
 
 void *theMemoryPool;
 NodeHeader *freePool;
@@ -21,4 +21,5 @@ typedef struct{
 void initialization ();
 MemoryBlockHeader *allocateMemory(int size);
 void deallocateMemory(void* memoryLocation);
+void destroyMemory();
 #endif // Allocator_H
