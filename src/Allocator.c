@@ -87,10 +87,12 @@ MemoryBlockHeader *allocateMemory(int size)
 void deallocateMemory(void* memoryLocation)
 {
 	int size = getMemorySize(allocatedPool);
+	NodeHeader * targetNode=NULL;
 	//Edit allocatedPool 
-	//NEED A FUNCTION AVLFIND TO GET THE NODE ADDRESS BEFORE USE THIS AVLREMOVE
-	
-	avlRemoveHeader(allocatedPool, memoryLocation);
+	MemoryBlockHeader tempHeader={.address=memoryLocation};
+	NodeHeader tempNode = {.data = &tempHeader};
+	targetNode = avlFindHeader (allocatedPool,&tempNode);
+	avlRemoveHeader(&allocatedPool, targetNode);
 	//Done for allocatedPool
 	//Edit freePool
 	getMemoryAddress(freePool) -= size;

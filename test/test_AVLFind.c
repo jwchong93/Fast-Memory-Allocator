@@ -51,8 +51,22 @@ void test_AVLFind_will_return_the_node_that_being_down_of_tree_and_remain_the_tr
 	TEST_ASSERT_NOT_NULL(testRoot1);
 	TEST_ASSERT_EQUAL(&realData4,testRoot1);
 }
-
- void test_AVLRemove_will_remove_400_from_a_very_large_tree()
+ /**
+ *              175 
+ *          /          \ 
+ *        100          400 
+ *       /   \       /     \
+ *     50    150   250     500
+ *    / \    /   /    \     / \
+ *  25  65 120 200    300 450 550
+ *   \          \     / \      \
+ *   40         220 270 350    600
+ *                      /
+ *                    330
+ *
+ * find 400
+ */
+ void test_AVLRemove_will_find_400_from_a_very_large_tree()
  {
 	MemoryBlockHeader H600={.address=(void*)600},
 	H550={.address=(void*)550},
