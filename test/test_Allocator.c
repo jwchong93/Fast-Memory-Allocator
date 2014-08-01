@@ -198,20 +198,26 @@ void test_deallocateMemory_will_()
 	testAllocateData = allocateMemory(50);
 	testAllocateData = allocateMemory(100);
 	testAllocateData = allocateMemory(150);
-	printf("theMemoryPool:%p\n",theMemoryPool);
-	printf("allocatedPool:%p\n",getMemoryAddress(allocatedPool));
-	printf("allocatedPool->rightChild:%p\n",getMemoryAddress(allocatedPool->rightChild));
-	printf("allocatedPool->leftChild:%p\n",getMemoryAddress(allocatedPool->leftChild));
-	printf("freePool:%p\n",getMemoryAddress(freePool));
+
 	deallocateMemory(theMemoryPool+50);
-	printf("\ntheMemoryPool:%p\n",theMemoryPool);
-	printf("allocatedPool:%p\n",getMemoryAddress(allocatedPool));
-	printf("allocatedPool->rightChild:%p\n",getMemoryAddress(allocatedPool->rightChild));
-	printf("freePool:%p\n",getMemoryAddress(freePool));
-	printf("freePool->leftChild:%p\n",getMemoryAddress(freePool->leftChild));
+	//After one node been deallocated.
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(allocatedPool));
+	TEST_ASSERT_EQUAL(theMemoryPool+150,getMemoryAddress(allocatedPool->rightChild));
+	TEST_ASSERT_NULL(allocatedPool->leftChild);
+	TEST_ASSERT_NULL(allocatedPool->rightChild->leftChild);
+	TEST_ASSERT_NULL(allocatedPool->rightChild->rightChild);
+	
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(200,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(100,getMemorySize(freePool->leftChild));
+	TEST_ASSERT_NULL(freePool->rightChild);
+	TEST_ASSERT_NULL(freePool->leftChild->rightChild);
+	TEST_ASSERT_NULL(freePool->leftChild->leftChild);
 	
 	deallocateMemory(theMemoryPool);
-/*	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+
+	/*
 	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
 	*/
 	destroyMemory();
