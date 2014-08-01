@@ -261,9 +261,33 @@ void test_deallocateMemory_will_()
 	destroyMemory();
 }
 
+void test_mergeMemoryBlock_will_merge_two_nodes_into_one_for_the_first_node_address_is_smaller_than_the_second_node()
+{
+	MemoryBlockHeader testHeader1={.address=(void*)300,.size=200};
+	MemoryBlockHeader testHeader2={.address=(void*)500,.size=100};
+	NodeHeader * testRoot=NULL;
+	NodeHeader * testRoot1=NULL;
+	NodeHeader realData1 = {.data = &testHeader1};
+	NodeHeader realData2 = {.data = &testHeader2};
+	testRoot1 = mergeMemoryBlock(&realData1,&realData2);
+	TEST_ASSERT_NOT_NULL(testRoot1);
+	TEST_ASSERT_EQUAL(300,getMemoryAddress(testRoot1));
+	TEST_ASSERT_EQUAL(300,getMemorySize(testRoot1));
+}
 
-
-
+void test_mergeMemoryBlock_will_merge_two_nodes_into_one_for_the_first_node_address_is_bigger_than_the_second_node()
+{
+	MemoryBlockHeader testHeader1={.address=(void*)500,.size=100};
+	MemoryBlockHeader testHeader2={.address=(void*)300,.size=200};
+	NodeHeader * testRoot=NULL;
+	NodeHeader * testRoot1=NULL;
+	NodeHeader realData1 = {.data = &testHeader1};
+	NodeHeader realData2 = {.data = &testHeader2};
+	testRoot1 = mergeMemoryBlock(&realData1,&realData2);
+	TEST_ASSERT_NOT_NULL(testRoot1);
+	TEST_ASSERT_EQUAL(300,getMemoryAddress(testRoot1));
+	TEST_ASSERT_EQUAL(300,getMemorySize(testRoot1));
+}
 
 
 

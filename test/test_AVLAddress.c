@@ -81,7 +81,7 @@ void test_avlFindNode_will_find_the_element_that_being_back_of_the_node()
 	
 	
 	TEST_ASSERT_NOT_NULL(testRoot1);
-	TEST_ASSERT_EQUAL((void*)750,getMemoryAddress(testRoot1));
+	TEST_ASSERT_EQUAL(750,getMemoryAddress(testRoot1));
 	TEST_ASSERT_EQUAL(200,getMemorySize(testRoot1));
 }
 

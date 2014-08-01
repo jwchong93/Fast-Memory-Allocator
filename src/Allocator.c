@@ -113,3 +113,21 @@ void deallocateMemory(void* memoryLocation)
 	
 	//Done for freePool
 }
+
+
+NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
+{
+	if(getMemoryAddress(targetNode)<getMemoryAddress(nodeToMerge))
+	{
+		getMemorySize(targetNode)+=getMemorySize(nodeToMerge);
+		free(nodeToMerge);
+		return targetNode;
+	}
+	else if(getMemoryAddress(targetNode)>getMemoryAddress(nodeToMerge))
+	{
+		getMemorySize(nodeToMerge)+=getMemorySize(targetNode);
+		free(targetNode);
+		return nodeToMerge;
+	}
+	
+}
