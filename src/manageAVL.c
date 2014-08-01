@@ -298,7 +298,6 @@ Node * AVLFind(Node *root,Node *data,int(*compare)(void*,void *))
 	int compareResult;
 	
 	compareResult = compare(root,data);
-	
 	if(compareResult==0)
 	{
 		tempNode=root;
@@ -435,11 +434,6 @@ Node* AVLRemove(Node **root,Node *nodeToRemove,int(*compare)(void*,void *))
 	{
 		return tempNode;
 	}
-}
-
-Node * AVLFindMergeableNode(Node *root,Node *data,int(*compare)(void*,void *))
-{
-	
 }
 
 
