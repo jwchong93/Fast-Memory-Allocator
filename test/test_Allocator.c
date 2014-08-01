@@ -185,5 +185,46 @@ void test_deallocateMemory_will_remove_the_node_where_three_parts_of_memory_is_a
 
 //Since the program for the allocatedPool is just same with the AVLRemove and AVLAdd,
 //the testing for the allocatedPool is done in manageAVL.
-//The following will start to test the freePool only which requires to merge if the 
+//The following will start to test the freePool only which requires to merge if the freeNode is connected.
+
+void test_deallocateMemory_will_()
+{
+	//Simply allocate three datas.
+	initialization();
+	findBlock_ExpectAndReturn (50,theMemoryPool);
+	findBlock_ExpectAndReturn (100,theMemoryPool+50);
+	findBlock_ExpectAndReturn (150,theMemoryPool+150);
+	MemoryBlockHeader *testAllocateData;
+	testAllocateData = allocateMemory(50);
+	testAllocateData = allocateMemory(100);
+	testAllocateData = allocateMemory(150);
+	printf("theMemoryPool:%p\n",theMemoryPool);
+	printf("allocatedPool:%p\n",getMemoryAddress(allocatedPool));
+	printf("allocatedPool->rightChild:%p\n",getMemoryAddress(allocatedPool->rightChild));
+	printf("allocatedPool->leftChild:%p\n",getMemoryAddress(allocatedPool->leftChild));
+	printf("freePool:%p\n",getMemoryAddress(freePool));
+	deallocateMemory(theMemoryPool+50);
+	printf("\ntheMemoryPool:%p\n",theMemoryPool);
+	printf("allocatedPool:%p\n",getMemoryAddress(allocatedPool));
+	printf("allocatedPool->rightChild:%p\n",getMemoryAddress(allocatedPool->rightChild));
+	printf("freePool:%p\n",getMemoryAddress(freePool));
+	printf("freePool->leftChild:%p\n",getMemoryAddress(freePool->leftChild));
+	
+	deallocateMemory(theMemoryPool);
+/*	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	*/
+	destroyMemory();
+}
+
+
+
+
+
+
+
+
+
+
+
 

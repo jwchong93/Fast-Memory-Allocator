@@ -48,6 +48,7 @@ void destroyMemory()
 }
 
 //This function in developing, will come back to this after finish deallocate.
+//Remark: Throw Error if the theMemoryPool can not support the size that requires to allocate.
 MemoryBlockHeader *allocateMemory(int size)
 {
 	void * freeSpace =NULL;
@@ -95,7 +96,6 @@ void deallocateMemory(void* memoryLocation)
 	targetNode = avlRemoveHeader(&allocatedPool, targetNode);
 	//Done for allocatedPool
 	//Edit freePool
-	
 	
 	if(getMemoryAddress(targetNode)+getMemorySize(targetNode)==getMemoryAddress(freePool))
 	{
