@@ -173,7 +173,17 @@ void test_deallocateMemory_will_remove_the_node_where_three_parts_of_memory_is_a
 	//The memory with size of 100 which start at theMemoryPool+50 will be deallocated and it will be dissapear.
 	TEST_ASSERT_NOT_NULL(allocatedPool);
 	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(allocatedPool));
+	TEST_ASSERT_EQUAL(theMemoryPool+150,getMemoryAddress(allocatedPool->rightChild));
+	TEST_ASSERT_EQUAL(NULL,allocatedPool->leftChild);
+	//Done with the allocated pool , which work as expected.
+	//Start to test with the freePool , which the freePool will contain two Node.
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_NULL(freePool->rightChild);
 	destroyMemory();
 }
 
+//Since the program for the allocatedPool is just same with the AVLRemove and AVLAdd,
+//the testing for the allocatedPool is done in manageAVL.
+//The following will start to test the freePool only which requires to merge if the 
 

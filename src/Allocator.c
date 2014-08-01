@@ -25,7 +25,7 @@ void initialization ()
 	newNode->leftChild=NULL;
 	newNode->rightChild=NULL;
 	newNode->balance =0;
-	freePool =(NodeHeader*)avlAddHeader(freePool,newNode);
+	freePool =avlAddHeader(freePool,newNode);
 	allocatedPool = NULL;
 	
 	
@@ -65,7 +65,7 @@ MemoryBlockHeader *allocateMemory(int size)
 	newAllocatedNode->rightChild=NULL;
 	newAllocatedNode->balance=0;
 	
-	allocatedPool = (NodeHeader*)avlAddHeader(allocatedPool, newAllocatedNode);
+	allocatedPool = avlAddHeader(allocatedPool, newAllocatedNode);
 	/**************************************************************************
 	
 							Done on allocatedPool
@@ -92,10 +92,21 @@ void deallocateMemory(void* memoryLocation)
 	MemoryBlockHeader tempHeader={.address=memoryLocation};
 	NodeHeader tempNode = {.data = &tempHeader};
 	targetNode = avlFindHeader (allocatedPool,&tempNode);
-	avlRemoveHeader(&allocatedPool, targetNode);
+	targetNode = avlRemoveHeader(&allocatedPool, targetNode);
 	//Done for allocatedPool
 	//Edit freePool
-	getMemoryAddress(freePool) -= size;
-	getMemorySize(freePool) += size;
+	
+	
+	if(getMemoryAddress(targetNode)+getMemorySize(targetNode)==getMemoryAddress(freePool))
+	{
+		getMemoryAddress(freePool) -= size;
+		getMemorySize(freePool) += size;
+		free(targetNode);
+	}
+	else
+	{
+		freePool =avlAddHeader(freePool,targetNode);
+	}
+	
 	//Done for freePool
 }
