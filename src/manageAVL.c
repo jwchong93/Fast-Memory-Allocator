@@ -437,7 +437,10 @@ Node* AVLRemove(Node **root,Node *nodeToRemove,int(*compare)(void*,void *))
 	}
 }
 
-
+Node * AVLFindMergeableNode(Node *root,Node *data,int(*compare)(void*,void *))
+{
+	
+}
 
 
 
