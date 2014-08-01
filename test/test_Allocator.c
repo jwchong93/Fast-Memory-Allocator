@@ -199,7 +199,31 @@ void test_deallocateMemory_will_()
 	testAllocateData = allocateMemory(100);
 	testAllocateData = allocateMemory(150);
 
+	/*
+	for MEMORY_SIZE=500
+	
+	|50 |
+	|100|
+	|150|
+	(200)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
+	
 	deallocateMemory(theMemoryPool+50);
+	
+	/*
+	after deallocate
+	
+	|50 |
+	(100)
+	|150|
+	(200)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
 	//After one node been deallocated.
 	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(allocatedPool));
 	TEST_ASSERT_EQUAL(theMemoryPool+150,getMemoryAddress(allocatedPool->rightChild));
@@ -214,12 +238,26 @@ void test_deallocateMemory_will_()
 	TEST_ASSERT_NULL(freePool->rightChild);
 	TEST_ASSERT_NULL(freePool->leftChild->rightChild);
 	TEST_ASSERT_NULL(freePool->leftChild->leftChild);
-	
 	deallocateMemory(theMemoryPool);
-
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(200,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(150,getMemorySize(freePool));
 	/*
-	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	after deallocate
+	
+	(50 )         (150)
+	(100)   =>    |150|
+	|150|         (200)
+	(200)
+	
+	()freeMemory
+	||allocatedMemory
 	*/
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(200,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(150,getMemorySize(freePool->leftChild));
 	destroyMemory();
 }
 
