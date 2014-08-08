@@ -4,6 +4,7 @@
 #include <malloc.h>
 #include "AVLAddress.h"
 #include "SupportiveFunction.h"
+#include "CException.h"
 
 /**********************************************************************
 * Initialize the global variables
@@ -16,6 +17,7 @@
 ***********************************************************************/
 void initialization ()
 {
+	Error e;
 	NodeHeader * newNode = malloc(sizeof(NodeHeader));
 	MemoryBlockHeader *newHeader= malloc(sizeof(MemoryBlockHeader));
 	theMemoryPool = malloc (sizeof(void)*MEMORY_SIZE);
@@ -25,7 +27,15 @@ void initialization ()
 	newNode->leftChild=NULL;
 	newNode->rightChild=NULL;
 	newNode->balance =0;
-	freePool =avlAddHeader(freePool,newNode);
+	
+		Try
+		{
+		freePool =avlAddHeader(freePool,newNode);
+		}
+		Catch(e)
+		{
+			printf("Hello, you failed at initialization!.\n");
+		}
 	allocatedPool = NULL;
 	
 	
@@ -52,6 +62,7 @@ void destroyMemory()
 MemoryBlockHeader *allocateMemory(int size)
 {
 	void * freeSpace =NULL;
+	Error e;
 	
 	//Handle the allocatedPool first.
 	NodeHeader *newAllocatedNode= malloc(sizeof(NodeHeader));
@@ -66,7 +77,15 @@ MemoryBlockHeader *allocateMemory(int size)
 	newAllocatedNode->rightChild=NULL;
 	newAllocatedNode->balance=0;
 	
-	allocatedPool = avlAddHeader(allocatedPool, newAllocatedNode);
+	
+		Try
+		{
+		allocatedPool = avlAddHeader(allocatedPool, newAllocatedNode);
+		}
+		Catch(e)
+		{
+			printf("Hello, you failed at allocateMemory!.\n");
+		}
 	/**************************************************************************
 	
 							Done on allocatedPool
@@ -89,6 +108,8 @@ void deallocateMemory(void* memoryLocation)
 {
 	int size = getMemorySize(allocatedPool);
 	NodeHeader * newFreePoolNode=NULL;
+	NodeHeader * checkNode=NULL;
+	Error e;
 	//Edit allocatedPool 
 	MemoryBlockHeader tempHeader={.address=memoryLocation};
 	NodeHeader tempNode = {.data = &tempHeader};
@@ -100,15 +121,27 @@ void deallocateMemory(void* memoryLocation)
 	newFreePoolNode->rightChild = NULL;
 	
 	//Edit freePool
-	if(getMemoryAddress(newFreePoolNode)+getMemorySize(newFreePoolNode)==getMemoryAddress(freePool))
+	/**
+		AVLFINDNODE FUNCTION
+	**/
+
+	 if(getMemoryAddress(newFreePoolNode)+getMemorySize(newFreePoolNode)==getMemoryAddress(freePool))
 	{
+		
 		getMemoryAddress(freePool) -= size;
 		getMemorySize(freePool) += size;
 		free(newFreePoolNode);
 	}
 	else
 	{
+		Try
+		{
 		freePool =avlAddHeader(freePool,newFreePoolNode);
+		}
+		Catch(e)
+		{
+			printf("Hello, you failed at deallocateMemory!.\n");
+		}
 	}
 	
 	//Done for freePool
@@ -117,17 +150,12 @@ void deallocateMemory(void* memoryLocation)
 
 NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 {
-	if(getMemoryAddress(targetNode)<getMemoryAddress(nodeToMerge))
+	getMemorySize(targetNode)+=getMemorySize(nodeToMerge);
+	if(getMemoryAddress(targetNode)>getMemoryAddress(nodeToMerge))
 	{
-		getMemorySize(targetNode)+=getMemorySize(nodeToMerge);
-		free(nodeToMerge);
-		return targetNode;
+		getMemoryAddress(targetNode)=getMemoryAddress(nodeToMerge);
 	}
-	else if(getMemoryAddress(targetNode)>getMemoryAddress(nodeToMerge))
-	{
-		getMemorySize(nodeToMerge)+=getMemorySize(targetNode);
-		free(targetNode);
-		return nodeToMerge;
-	}
+	free(nodeToMerge);
+	return targetNode;
 	
 }
