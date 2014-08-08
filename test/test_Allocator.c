@@ -429,10 +429,10 @@ void test_deallocateMemory_will_merge_the_node_when_the_address_is_in_between_of
 	
 	//Deallocate the last node and make sure the allocatedPool will be NULL
 	//freePool will only contain one node with size = MEMORY_SIZE
-	// deallocateMemory(theMemoryPool+300);
-	// TEST_ASSERT_NULL(allocatedPool);
-	// TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
-	// TEST_ASSERT_EQUAL(MEMORY_SIZE,getMemorySize(freePool));
+	deallocateMemory(theMemoryPool+300);
+	TEST_ASSERT_NULL(allocatedPool);
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(MEMORY_SIZE,getMemorySize(freePool));
 }
 
 

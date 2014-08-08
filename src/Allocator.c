@@ -129,6 +129,8 @@ void deallocateMemory(void* memoryLocation)
 		while(checkNode!=NULL)
 		{
 			checkNode = avlRemoveHeader(&freePool,checkNode);
+			checkNode->leftChild=NULL;
+			checkNode->rightChild=NULL;
 			newFreePoolNode = mergeMemoryBlock(checkNode,newFreePoolNode);
 			if(freePool==NULL)
 			{
