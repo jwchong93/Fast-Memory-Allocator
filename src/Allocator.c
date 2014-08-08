@@ -67,7 +67,7 @@ void *allocateMemory(int size)
 {
 	void * freeSpace =NULL;
 	Error e;
-	
+	NodeHeader *tempNode=NULL;
 	//Handle the allocatedPool first.
 	NodeHeader *newAllocatedNode= malloc(sizeof(NodeHeader));
 	MemoryBlockHeader *newAllocatedHeader= malloc(sizeof(MemoryBlockHeader));
@@ -97,8 +97,24 @@ void *allocateMemory(int size)
 	***************************************************************************/
 	
 	//Starting on the freePool
-	getMemoryAddress(freePool) += size;
-	getMemorySize(freePool) -= size;
+	tempNode = findSpace(freePool,size);
+	if(tempNode==NULL)
+	{
+		avlRemoveHeader(&allocatedPool, newAllocatedNode);
+		free(newAllocatedHeader);
+		free(newAllocatedNode);
+		return NULL;
+	}
+	if(getMemorySize(tempNode)>size)
+	{
+		getMemoryAddress(tempNode) += size;
+		getMemorySize(tempNode) -= size;
+	}
+	else if (getMemorySize(tempNode)>size)
+	{
+		avlRemoveHeader(&freePool, tempNode);
+	}
+
 	/**************************************************************************
 	
 							End of editing freePool
@@ -141,8 +157,9 @@ void deallocateMemory(void* memoryLocation)
 			checkNode = avlFindNode(freePool,newFreePoolNode);
 				
 		}
-		 Try
+		Try
 		{
+			newFreePoolNode->balance=0;
 			freePool =avlAddHeader(freePool,newFreePoolNode);
 		}
 		Catch(e)
@@ -154,7 +171,8 @@ void deallocateMemory(void* memoryLocation)
 	{
 		Try
 		{
-		freePool =avlAddHeader(freePool,newFreePoolNode);
+			newFreePoolNode->balance=0;
+			freePool =avlAddHeader(freePool,newFreePoolNode);
 		}
 		Catch(e)
 		{
@@ -213,6 +231,30 @@ void destroyHeaderAVL(NodeHeader *root)
 	
 }
 
+NodeHeader *findSpace(NodeHeader *root,int size)
+{
+	NodeHeader *tempNode=NULL;
+	if(getMemorySize(root)>=size)
+		tempNode=root;
+	else if(root->leftChild!=NULL)
+	{
+		tempNode=findSpace(root->leftChild,size);
+		if(tempNode==NULL&&root->rightChild!=NULL)
+		{
+			tempNode=findSpace(root->rightChild,size);
+		}
+	}
+	else if(root->rightChild!=NULL)
+	{
+		tempNode=findSpace(root->rightChild,size);
+		if(tempNode==NULL&&root->leftChild!=NULL)
+		{
+			tempNode=findSpace(root->leftChild,size);
+		}
+	}	
+	return tempNode;
+
+}
 
 
 

@@ -430,10 +430,12 @@ void test_deallocateMemory_will_merge_the_node_when_the_address_is_in_between_of
 	TEST_ASSERT_NULL(allocatedPool);
 	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
 	TEST_ASSERT_EQUAL(MEMORY_SIZE,getMemorySize(freePool));
+	destroyMemory();
 }
 
 void test_deallocateMemory_and_allocateMemory_at_the_same_time_will_not_affect_the_performance_of_the_allocator()
 {
+	initialization();
 	void * testAllocateData1,
 						*testAllocateData2,
 						*testAllocateData3,
@@ -444,10 +446,34 @@ void test_deallocateMemory_and_allocateMemory_at_the_same_time_will_not_affect_t
 	testAllocateData3 = allocateMemory(150);
 	testAllocateData4 = allocateMemory(75);
 	
-	deallocateMemory(theMemoryPool+50);
+	deallocateMemory(testAllocateData2);
 	TEST_ASSERT_EQUAL(theMemoryPool+375,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(125,getMemorySize(freePool));
 	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(100,getMemorySize(freePool->leftChild));
+	testAllocateData2 = allocateMemory(100);
+	TEST_ASSERT_EQUAL(theMemoryPool+475,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(25,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(100,getMemorySize(freePool->leftChild));
+	TEST_ASSERT_NULL(freePool->rightChild);
 	
+	deallocateMemory(testAllocateData4);
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(75,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(100,getMemorySize(freePool->leftChild));
+	TEST_ASSERT_EQUAL(theMemoryPool+475,getMemoryAddress(freePool->rightChild));
+	TEST_ASSERT_EQUAL(25,getMemorySize(freePool->rightChild));
+	
+	testAllocateData4 = allocateMemory(100);
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(75,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool+475,getMemoryAddress(freePool->rightChild));
+	TEST_ASSERT_EQUAL(25,getMemorySize(freePool->rightChild));
+	
+	
+	destroyMemory();
 }
 
 
