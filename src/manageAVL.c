@@ -1,6 +1,7 @@
 #include "manageAVL.h"
 #include <stdio.h>
 #include "CException.h"
+#include <malloc.h>
 //#include "AVLInt.h"
 
 Node* leftRotate(Node *elem)
@@ -435,7 +436,6 @@ Node* AVLRemove(Node **root,Node *nodeToRemove,int(*compare)(void*,void *))
 		return tempNode;
 	}
 }
-
 
 
 

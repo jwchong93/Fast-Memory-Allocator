@@ -16,7 +16,6 @@ int compareNode(void *nodeInTree, void *nodeToCompare)
 	(getMemoryAddress(nodeInTree)==getMemoryAddress(nodeToCompare)+getMemorySize(nodeToCompare))|| \
 	getMemoryAddress(nodeInTree)==getMemoryAddress(nodeToCompare))
 		return 0;
-	
 	else if(getMemoryAddress(nodeInTree) < getMemoryAddress(nodeToCompare))
 		return -1;
 	else if(getMemoryAddress(nodeInTree) > getMemoryAddress(nodeToCompare))

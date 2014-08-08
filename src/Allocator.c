@@ -28,14 +28,14 @@ void initialization ()
 	newNode->rightChild=NULL;
 	newNode->balance =0;
 	
-		Try
-		{
+	Try
+	{
 		freePool =avlAddHeader(freePool,newNode);
-		}
-		Catch(e)
-		{
-			printf("Hello, you failed at initialization!.\n");
-		}
+	}
+	Catch(e)
+	{
+		printf("Hello, you failed at initialization!.\n");
+	}
 	allocatedPool = NULL;
 	
 	
@@ -53,7 +53,9 @@ void initialization ()
 void destroyMemory()
 {
 	free(theMemoryPool);
+	free(freePool);
 	freePool=NULL;
+	free(allocatedPool);
 	allocatedPool = NULL;
 }
 
@@ -121,16 +123,28 @@ void deallocateMemory(void* memoryLocation)
 	newFreePoolNode->rightChild = NULL;
 	
 	//Edit freePool
-	/**
-		AVLFINDNODE FUNCTION
-	**/
-
-	 if(getMemoryAddress(newFreePoolNode)+getMemorySize(newFreePoolNode)==getMemoryAddress(freePool))
+	checkNode = avlFindNode(freePool,newFreePoolNode);
+	if(checkNode!=NULL)
 	{
-		
-		getMemoryAddress(freePool) -= size;
-		getMemorySize(freePool) += size;
-		free(newFreePoolNode);
+		while(checkNode!=NULL)
+		{
+			checkNode = avlRemoveHeader(&freePool,checkNode);
+			newFreePoolNode = mergeMemoryBlock(checkNode,newFreePoolNode);
+			if(freePool==NULL)
+			{
+				break;
+			}
+			checkNode = avlFindNode(freePool,newFreePoolNode);
+				
+		}
+		 Try
+		{
+			freePool =avlAddHeader(freePool,newFreePoolNode);
+		}
+		Catch(e)
+		{
+			printf("Hello, you failed at deallocateMemory!.\n");
+		}
 	}
 	else
 	{

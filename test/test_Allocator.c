@@ -16,6 +16,7 @@ void tearDown(void)
 
 void test_initialization_will_initial_allocatedPool_become_NULL()
 {
+	
 	initialization();
 	TEST_ASSERT_NULL(allocatedPool);
 	free(theMemoryPool);
@@ -24,6 +25,7 @@ void test_initialization_will_initial_allocatedPool_become_NULL()
 
 void test_initialization_will_initial_freePool_to_point_to_the_start_location_of_the_available_memory_pool()
 {
+	
 	initialization();
 	TEST_ASSERT_NOT_NULL(freePool);
 	TEST_ASSERT_EQUAL(MEMORY_SIZE,getMemorySize(freePool));
@@ -53,6 +55,7 @@ void test_allocateMemory_will_add_the_first_location_of_the_memory_pool_into_the
 
 void test_allocateMemory_will_update_the_freePool_after_data_been_allocated()
 {
+		
 	initialization();
 	findBlock_ExpectAndReturn (50,theMemoryPool);
 	MemoryBlockHeader *testAllocateData;
@@ -64,6 +67,7 @@ void test_allocateMemory_will_update_the_freePool_after_data_been_allocated()
 
 void test_allocateMemory_will_update_the_freePool_and_allocatedPool_if_two_range_memory_been_allocated()
 {
+	
 	initialization();
 	findBlock_ExpectAndReturn (50,theMemoryPool);
 	MemoryBlockHeader *testAllocateData;
@@ -94,6 +98,7 @@ void test_allocateMemory_will_update_the_freePool_and_allocatedPool_if_two_range
 
 void test_allocatedMemory_will_update_the_pools_correctly_when_three_part_of_memories_is_been_allocated()
 {
+
 	initialization();
 	findBlock_ExpectAndReturn (50,theMemoryPool);
 	MemoryBlockHeader *testAllocateData;
@@ -196,7 +201,7 @@ void test_deallocateMemory_will_remove_the_node_where_three_parts_of_memory_is_a
 //the testing for the allocatedPool is done in manageAVL.
 //The following will start to test the freePool only which requires to merge if the freeNode is connected.
 
-void test_deallocateMemory_will_merge_the_node_when_the_address_is_continuous()
+void test_deallocateMemory_will_merge_the_node_when_the_address_is_continuous_downward()
 {
 	//Simply allocate three datas.
 	initialization();
@@ -248,8 +253,11 @@ void test_deallocateMemory_will_merge_the_node_when_the_address_is_continuous()
 	TEST_ASSERT_NULL(freePool->leftChild->rightChild);
 	TEST_ASSERT_NULL(freePool->leftChild->leftChild);
 	deallocateMemory(theMemoryPool);
-	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
-	TEST_ASSERT_EQUAL(150,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(200,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(150,getMemorySize(freePool->leftChild));
+	TEST_ASSERT_NULL(freePool->rightChild);
 	/*
 	after deallocate
 	
@@ -264,8 +272,168 @@ void test_deallocateMemory_will_merge_the_node_when_the_address_is_continuous()
 	destroyMemory();
 }
 
+void test_deallocateMemory_will_merge_the_node_when_the_address_is_continuous_from_the_top()
+{
+	//Simply allocate three datas.
+	initialization();
+	findBlock_ExpectAndReturn (50,theMemoryPool);
+	findBlock_ExpectAndReturn (100,theMemoryPool+50);
+	findBlock_ExpectAndReturn (150,theMemoryPool+150);
+	MemoryBlockHeader *testAllocateData;
+	testAllocateData = allocateMemory(50);
+	testAllocateData = allocateMemory(100);
+	testAllocateData = allocateMemory(150);
 
+	/*
+	for MEMORY_SIZE=500
+	
+	|50 |
+	|100|
+	|150|
+	(200)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
+	
+	deallocateMemory(theMemoryPool);
+	
+	/*
+	after deallocate
+	
+	(50 )
+	|100|
+	|150|
+	(200)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
+	//After one node been deallocated.
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(allocatedPool));
+	TEST_ASSERT_EQUAL(theMemoryPool+150,getMemoryAddress(allocatedPool->rightChild));
+	TEST_ASSERT_NULL(allocatedPool->leftChild);
+	TEST_ASSERT_NULL(allocatedPool->rightChild->leftChild);
+	TEST_ASSERT_NULL(allocatedPool->rightChild->rightChild);
+	
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(200,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(50,getMemorySize(freePool->leftChild));
+	TEST_ASSERT_NULL(freePool->rightChild);
+	TEST_ASSERT_NULL(freePool->leftChild->rightChild);
+	TEST_ASSERT_NULL(freePool->leftChild->leftChild);
+	deallocateMemory(theMemoryPool+50);
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(200,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(150,getMemorySize(freePool->leftChild));
+	TEST_ASSERT_NULL(freePool->rightChild);
+	/*
+	after deallocate
+	
+	(50 )         (150)
+	(100)   =>    |150|
+	|150|         (200)
+	(200)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
+	destroyMemory();
+}
 
+void test_deallocateMemory_will_merge_the_node_when_the_address_is_in_between_of_two_nodes()
+{
+	//Simply allocate three datas.
+	initialization();
+	findBlock_ExpectAndReturn (50,theMemoryPool);
+	findBlock_ExpectAndReturn (100,theMemoryPool+50);
+	findBlock_ExpectAndReturn (150,theMemoryPool+150);
+	findBlock_ExpectAndReturn (50,theMemoryPool+300);
+	MemoryBlockHeader *testAllocateData;
+	testAllocateData = allocateMemory(50);
+	testAllocateData = allocateMemory(100);
+	testAllocateData = allocateMemory(150);
+	testAllocateData = allocateMemory(50);
+
+	/*
+	for MEMORY_SIZE=500
+	
+	|50 |
+	|100|
+	|150|
+	|50 |
+	(150)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
+	//Make sure the allocatedPool is follow the AVL pattern
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(allocatedPool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(allocatedPool->leftChild));
+	TEST_ASSERT_EQUAL(theMemoryPool+150,getMemoryAddress(allocatedPool->rightChild));
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(allocatedPool->rightChild->rightChild));
+	
+	TEST_ASSERT_EQUAL(theMemoryPool+350,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(150,getMemorySize(freePool));
+	
+	//Test plan , deallocate first 50 and 150 and deallocate 100 lastly.
+	deallocateMemory(theMemoryPool);
+	deallocateMemory(theMemoryPool+150);
+	
+	//After the two deallocation.
+	/*
+	for MEMORY_SIZE=500
+	
+	(50 )
+	|100|
+	(150)
+	|50 |
+	(150)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
+	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(allocatedPool));
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(allocatedPool->rightChild));
+	TEST_ASSERT_NULL(allocatedPool->leftChild);
+	
+	TEST_ASSERT_EQUAL(theMemoryPool+150,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(theMemoryPool+350,getMemoryAddress(freePool->rightChild));
+	
+	//Test situation ready, going to the real testing part
+	deallocateMemory(theMemoryPool+50);
+	
+	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(allocatedPool));
+	TEST_ASSERT_NULL(allocatedPool->leftChild);
+	TEST_ASSERT_NULL(allocatedPool->rightChild);
+	
+	TEST_ASSERT_EQUAL(theMemoryPool+350,getMemoryAddress(freePool));
+	TEST_ASSERT_EQUAL(150,getMemorySize(freePool));
+	TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool->leftChild));
+	TEST_ASSERT_EQUAL(300,getMemorySize(freePool->leftChild));
+	TEST_ASSERT_NULL(freePool->rightChild);
+	//Deallocated 100
+	/*
+	for MEMORY_SIZE=500
+	
+	(300)
+	|50 |
+	(150)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
+	
+	//Deallocate the last node and make sure the allocatedPool will be NULL
+	//freePool will only contain one node with size = MEMORY_SIZE
+	// deallocateMemory(theMemoryPool+300);
+	// TEST_ASSERT_NULL(allocatedPool);
+	// TEST_ASSERT_EQUAL(theMemoryPool,getMemoryAddress(freePool));
+	// TEST_ASSERT_EQUAL(MEMORY_SIZE,getMemorySize(freePool));
+}
 
 
 

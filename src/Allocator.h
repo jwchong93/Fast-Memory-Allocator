@@ -8,7 +8,7 @@
 
 #define getMemoryAddress(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->data)->address)
 #define getMemorySize(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->data)->size)
-
+#define destroyNodeAVL(node) destroyAVL((Node*)node)
 void *theMemoryPool;
 NodeHeader *freePool;
 NodeHeader *allocatedPool;
