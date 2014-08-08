@@ -63,7 +63,7 @@ void destroyMemory()
 
 //This function in developing, will come back to this after finish deallocate.
 //Remark: Throw Error if the theMemoryPool can not support the size that requires to allocate.
-MemoryBlockHeader *allocateMemory(int size)
+void *allocateMemory(int size)
 {
 	void * freeSpace =NULL;
 	Error e;
@@ -104,7 +104,7 @@ MemoryBlockHeader *allocateMemory(int size)
 							End of editing freePool
 							
 	***************************************************************************/
-	return newAllocatedHeader;
+	return getMemoryAddress(newAllocatedNode);
 	
 }
 
