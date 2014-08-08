@@ -21,6 +21,7 @@ typedef struct{
 void initialization ();
 MemoryBlockHeader *allocateMemory(int size);
 void deallocateMemory(void* memoryLocation);
+void destroyHeaderAVL(NodeHeader *root);
 NodeHeader *mergeMemoryBlock(NodeHeader *targetNode,NodeHeader *nodeToMerge);
 void destroyMemory();
 #endif // Allocator_H

@@ -53,9 +53,11 @@ void initialization ()
 void destroyMemory()
 {
 	free(theMemoryPool);
-	free(freePool);
+	destroyHeaderAVL(freePool);
+	// free(freePool);
 	freePool=NULL;
-	free(allocatedPool);
+	destroyHeaderAVL(allocatedPool);
+	// free(allocatedPool);
 	allocatedPool = NULL;
 }
 
@@ -175,3 +177,52 @@ NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 	return targetNode;
 	
 }
+
+void destroyHeaderAVL(NodeHeader *root)
+{
+	if(root==NULL)
+	{
+		return;
+	}
+	if(root->leftChild!=NULL)
+	{
+		destroyHeaderAVL(root->leftChild);
+		root->leftChild=NULL;
+		if(root->rightChild!=NULL)
+		{
+			destroyHeaderAVL(root->rightChild);
+			root->rightChild=NULL;
+		}
+	}
+	else if(root->rightChild!=NULL)
+	{
+		destroyHeaderAVL(root->rightChild);
+		root->rightChild=NULL;
+		if(root->leftChild!=NULL)
+		{
+			destroyHeaderAVL(root->leftChild);
+			root->leftChild=NULL;
+		}
+	}
+	else
+	{
+	
+		free(root->data);
+		free(root);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
