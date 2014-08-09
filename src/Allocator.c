@@ -61,8 +61,15 @@ void destroyMemory()
 	allocatedPool = NULL;
 }
 
-//This function in developing, will come back to this after finish deallocate.
-//Remark: Throw Error if the theMemoryPool can not support the size that requires to allocate.
+/*********************************************************************
+* Allocate certain size of memory from theMemoryPool
+*
+*	Input: 		size									size of the memory that going to allocate
+*	Output: 	getMemoryAddress(newAllocatedNode)		address of the allocated memory
+*
+*	Modify: freePool,allocatedPool
+*		
+**********************************************************************/
 void *allocateMemory(int size)
 {
 	void * freeSpace =NULL;
@@ -82,14 +89,7 @@ void *allocateMemory(int size)
 	newAllocatedNode->balance=0;
 	
 	
-		Try
-		{
-		allocatedPool = avlAddHeader(allocatedPool, newAllocatedNode);
-		}
-		Catch(e)
-		{
-			printf("Hello, you failed at allocateMemory!.\n");
-		}
+	allocatedPool = avlAddHeader(allocatedPool, newAllocatedNode);
 	/**************************************************************************
 	
 							Done on allocatedPool
@@ -110,7 +110,7 @@ void *allocateMemory(int size)
 		getMemoryAddress(tempNode) += size;
 		getMemorySize(tempNode) -= size;
 	}
-	else if (getMemorySize(tempNode)>size)
+	else if (getMemorySize(tempNode)==size)
 	{
 		avlRemoveHeader(&freePool, tempNode);
 	}
@@ -123,7 +123,15 @@ void *allocateMemory(int size)
 	return getMemoryAddress(newAllocatedNode);
 	
 }
-
+/*********************************************************************
+* Deallocate specific memory
+*
+*	Input: 		memoryLocation		the allocated location
+*	Output: 	none
+*
+*	Modify: freePool,allocatedPool
+*	
+**********************************************************************/
 void deallocateMemory(void* memoryLocation)
 {
 	int size = getMemorySize(allocatedPool);
@@ -134,6 +142,10 @@ void deallocateMemory(void* memoryLocation)
 	MemoryBlockHeader tempHeader={.address=memoryLocation};
 	NodeHeader tempNode = {.data = &tempHeader};
 	newFreePoolNode = avlFindHeader (allocatedPool,&tempNode);
+	if(newFreePoolNode==NULL)
+	{
+		return;
+	}
 	newFreePoolNode = avlRemoveHeader(&allocatedPool, newFreePoolNode);
 	//Done for allocatedPool
 	//Make sure the Node contain no child (Those child already handle by the function)
@@ -183,6 +195,15 @@ void deallocateMemory(void* memoryLocation)
 	//Done for freePool
 }
 
+/*********************************************************************
+* Merge two node into one
+*
+*	Input: 		targetNode,nodeToMerge		two nodes to merge
+*	Output: 	targetNode(merged)			merged to the first node
+*
+*	Destroy: none
+*	
+**********************************************************************/
 
 NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 {
@@ -196,6 +217,15 @@ NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 	
 }
 
+/*********************************************************************
+* Destroy/Delete an AVL tree which contains header inside
+*
+*	Input: root			the root of the AVL tree
+*	Output: none
+*
+*	Destroy: none
+*	
+**********************************************************************/
 void destroyHeaderAVL(NodeHeader *root)
 {
 	if(root==NULL)
@@ -230,6 +260,18 @@ void destroyHeaderAVL(NodeHeader *root)
 	}
 	
 }
+
+/*********************************************************************
+* Find a space from the AVL which suitable to allocate certain memory
+*
+*	Input: root			the root of the AVL tree
+			size		size of memory going to allocate
+*	Output: tempNode	Contain the address of the suitable memory location
+						NULL if there are no suitable location
+*
+*	Destroy: none
+*	
+**********************************************************************/
 
 NodeHeader *findSpace(NodeHeader *root,int size)
 {
