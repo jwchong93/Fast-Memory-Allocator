@@ -1,6 +1,19 @@
 #include "Allocator.h"
 #include "SupportiveFunction.h"
 #include <stdio.h>
+
+/**********************************************************************
+* Find a suitable memory location from theMemoryPool(global variable)
+*	which can fit certain size
+*
+*	Input: size								the size of the memory going to be allocated
+*	Output: getMemoryAddress(tempNode)		the address that suitable for allocation
+*			NULL							There are no suitable location to allocate
+*	
+*	Destroy: none
+*
+***********************************************************************/
+
 void* findBlock(int size)
 {
 	NodeHeader* tempNode=NULL;
@@ -16,6 +29,16 @@ void* findBlock(int size)
 	// return theMemoryPool;
 }
 
+/**********************************************************************
+* Find from the node that which the size is bigger or equal to the input data
+*
+*	Input: root				the root of the tree
+			data			the size that requires.
+*	Output: tempNode		the address of a node that contain suitable size for data
+*	
+*	Destroy: none
+*
+***********************************************************************/
 NodeHeader* AVLFindSpace(NodeHeader* root,int data)
 {
 	NodeHeader* tempNode=NULL;
