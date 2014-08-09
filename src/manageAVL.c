@@ -4,6 +4,16 @@
 #include <malloc.h>
 //#include "AVLInt.h"
 
+/*********************************************************************
+* Left rotate the tree, use to balance the tree in future
+*
+*	Input: elem			the node which contain children that requires to do Rotation
+*	Output: tempNode 	the new location that leading the tree after rotation
+*
+*	Destroy: none
+*	
+**********************************************************************/
+
 Node* leftRotate(Node *elem)
 {
 	if(elem->balance==2&&elem->rightChild->balance==1)
@@ -37,7 +47,15 @@ Node* leftRotate(Node *elem)
 	//getBalance(tempNode);
 	return tempNode;
 }
-
+/*********************************************************************
+* Right rotate the tree, use to balance the tree in future
+*
+*	Input: elem			the node which contain children that requires to do Rotation
+*	Output: tempNode 	the new location that leading the tree after rotation
+*
+*	Destroy: none
+*	
+**********************************************************************/
 Node* rightRotate(Node *elem)
 {
 
@@ -73,6 +91,15 @@ Node* rightRotate(Node *elem)
 	return tempNode;
 }
 
+/*********************************************************************
+* Double right rotate the tree, use to balance the tree in future
+*
+*	Input: elem			the node which contain children that requires to do Rotation
+*	Output: tempNode 	the new location that leading the tree after rotation
+*
+*	Destroy: none
+*	
+**********************************************************************/
 Node* doubleRightRotate(Node *elem)
 {
 	Node *tempNode=elem->leftChild->rightChild;
@@ -99,6 +126,16 @@ Node* doubleRightRotate(Node *elem)
 	//getBalance(tempNode);
 	return tempNode;
 }
+
+/*********************************************************************
+* Double left rotate the tree, use to balance the tree in future
+*
+*	Input: elem			the node which contain children that requires to do Rotation
+*	Output: tempNode 	the new location that leading the tree after rotation
+*
+*	Destroy: none
+*	
+**********************************************************************/
 
 Node* doubleLeftRotate(Node *elem)
 {
@@ -127,6 +164,17 @@ Node* doubleLeftRotate(Node *elem)
 	return tempNode;
 }
 
+/*********************************************************************
+* This function is use to determine the current height of the tree
+*
+*	Input: elem			the root of the tree
+*	Output: leftHeight		if the height of leftchild is higher
+*			rightHeight 	if the height of rightchild is higher
+*
+*	Destroy: none
+*	
+**********************************************************************/
+
 int getHeight(Node *elem)
 {
 	int leftHeight=0,rightHeight=0;
@@ -149,7 +197,15 @@ int getHeight(Node *elem)
 	}
 }
 
-
+/*********************************************************************
+* This fucntion will rotate the tree to form balanced tree
+*
+*	Input: root		the root of the tree
+*	Output: root	the root of the tree after rotation and modification
+*
+*	Destroy: none
+*	
+**********************************************************************/
 Node * AVLBalance(Node *root)
 {
 	if(root->balance==2&&(root->rightChild->balance==1||root->rightChild->balance==0))
@@ -172,6 +228,18 @@ Node * AVLBalance(Node *root)
 	//getBalance(root);
 	return root;
 }
+
+/*********************************************************************
+* This function will add a new member into the tree
+*
+*	Input: 	root			the root of the tree
+*			nodeToAdd		the new member of the tree
+			compare			pointer to a function to determine the rules to add member(for future implementation)
+*	Output: root			the new root after modification
+*
+*	Destroy: none
+*	
+**********************************************************************/
 
 Node *avlAdd(Node *root,Node *nodeToAdd,int (*compare)(void*,void*))
 {
@@ -247,6 +315,17 @@ Node *avlAdd(Node *root,Node *nodeToAdd,int (*compare)(void*,void*))
 	root = AVLBalance(root);
 	return root;
 }
+
+/*********************************************************************
+* This function is use to find a suitable replacer while node in the tree been removed
+*
+*	Input: root			the root of the tree
+*	Output: tempNode	the node that going to replace the empty space
+*
+*	Destroy: none
+*	
+**********************************************************************/
+
 Node * getReplacer(Node ** root)
 {
 	Node *tempNode=NULL;
@@ -293,6 +372,19 @@ Node * getReplacer(Node ** root)
 	
 }
 
+/*********************************************************************
+* This function is use to find certain type of node in the tree
+*
+*	Input: root			the root of the tree
+			data		the target that going to be searched in the tree
+			compare		pointer to function that determine the rule to find(for future implementation)
+*	Output: tempNode	contain the address of the matched node.
+						NULL if there are no matched node.
+*
+*	Destroy: none
+*	
+**********************************************************************/
+
 Node * AVLFind(Node *root,Node *data,int(*compare)(void*,void *))
 {
 	Node *tempNode=NULL;
@@ -313,6 +405,20 @@ Node * AVLFind(Node *root,Node *data,int(*compare)(void*,void *))
 	}
 		return tempNode;
 }
+
+
+/*********************************************************************
+* This function is use to remove specific node in the tree
+*
+*	Input: root				the root of the tree
+			nodeToRemove	the target that going to be removed from the tree
+			compare			pointer to function that determine the rule to remove(for future implementation)
+*	Output: tempNode		contain the address of the matched node.
+							NULL if there are no matched node.
+*
+*	Destroy: none
+*	
+**********************************************************************/
 
 Node* AVLRemove(Node **root,Node *nodeToRemove,int(*compare)(void*,void *))
 {
