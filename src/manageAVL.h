@@ -2,7 +2,7 @@
 #define manageAVL_H
 
 
-
+//The node that will carry data and children.
 typedef struct node 
 {
 	int balance;
@@ -12,6 +12,17 @@ typedef struct node
 }Node;
 typedef enum error {INVALID_INPUT}Error;
 
+/**
+#############################################################################
+#	To use this program, the following is the guide                         #
+#   Step 1: Create a pointer which is pointing to NULL                      #
+#   Step 2: Create a node object to store the data                          #
+#   Step 3: Add this node to the root using avlAdd                          #
+#   Step 4: To Remove use AVLRemove, find use AVLFind                       #
+#                                                                           #
+#   P/S: Remember to destroy all the node before ending the program         #
+#############################################################################
+**/
 int getHeight(Node *elem);
 Node* rightRotate(Node *elem);
 Node* leftRotate(Node *elem);

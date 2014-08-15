@@ -14,7 +14,7 @@
 	Originally: 	#define MEMORY_SIZE (500)
 	Change it to: 	#define MEMORY_SIZE (x)
 	
-	Where the x = to the size require.
+	Where the x = the size require.
 	
 	P/S: Please consider the available RAM when define the memory size.
 */
@@ -66,16 +66,18 @@ typedef struct{
 	void *address;
 }MemoryBlockHeader;
 
-/*
+/**
 ########################################################################################################
 #	Guide to use this program.                                                                         #
 #	Step 1: Simply call the function initialization().                                                 #
 #	Step 2: Call the function allocateMemory(size) to allocate certain size.                           #
 #			*Remember save the returned address from this function.                                    #
 #	Step 3: Use the function deallocateMemory(address) to free the specific address if not needed.     #
-#	Step 4: call the function destroyMemory() to kill all the created memory as an ending.             #
+#	Step 4: Call the function destroyMemory() to kill all the created memory as an ending.             #
+#                                                                                                      #
+#   Strongly recommend to deallocate the memories manually using the function deallocateMemory()       #
 ########################################################################################################
-*/
+**/
 void initialization ();
 void *allocateMemory(int size);
 void deallocateMemory(void* memoryLocation);

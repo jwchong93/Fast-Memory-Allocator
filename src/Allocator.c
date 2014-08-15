@@ -6,7 +6,7 @@
 #include "SupportiveFunction.h"
 #include "CException.h"
 
-/**********************************************************************
+/************************************************************************************************
 * Initialize the global variables
 *
 *	Input: none
@@ -14,7 +14,7 @@
 *	
 *	Global variables affected: freePool, allocatedPool, theMemoryPool
 *
-***********************************************************************/
+*************************************************************************************************/
 void initialization ()
 {
 	
@@ -35,7 +35,7 @@ void initialization ()
 	
 }
 
-/*********************************************************************
+/*************************************************************************************************
 * Destroy the data inside the global variables.
 *
 *	Input: none
@@ -43,7 +43,7 @@ void initialization ()
 *
 *	Destroy: freePool,allocatedPool,theMemoryPool
 *	
-**********************************************************************/
+**************************************************************************************************/
 void destroyMemory()
 {
 	free(theMemoryPool);
@@ -55,15 +55,15 @@ void destroyMemory()
 	allocatedPool = NULL;
 }
 
-/*********************************************************************
+/***************************************************************************************************
 * Allocate certain size of memory from theMemoryPool
-*
-*	Input: 		size									size of the memory that going to allocate
-*	Output: 	getMemoryAddress(newAllocatedNode)		address of the allocated memory
-*
+*                                                       *******************************************
+*	Input: 		size									*size of the memory that going to allocate*
+*	Output: 	getMemoryAddress(newAllocatedNode)		*address of the allocated memory          *
+*                                                       *******************************************
 *	Modify: freePool,allocatedPool
 *		
-**********************************************************************/
+***************************************************************************************************/
 void *allocateMemory(int size)
 {
 	if(size>MEMORY_SIZE||freePool==NULL)
@@ -125,7 +125,7 @@ void *allocateMemory(int size)
 	return getMemoryAddress(newAllocatedNode);
 	
 }
-/*********************************************************************
+/*********************************************************************************
 * Deallocate specific memory
 *
 *	Input: 		memoryLocation		the allocated location
@@ -133,7 +133,7 @@ void *allocateMemory(int size)
 *
 *	Modify: freePool,allocatedPool
 *	
-**********************************************************************/
+**********************************************************************************/
 void deallocateMemory(void* memoryLocation)
 {
 	int size = getMemorySize(allocatedPool);
@@ -199,7 +199,7 @@ void deallocateMemory(void* memoryLocation)
 	**/
 }
 
-/*********************************************************************
+/********************************************************************************
 * Merge two node into one
 *
 *	Input: 		targetNode,nodeToMerge		two nodes to merge
@@ -207,7 +207,7 @@ void deallocateMemory(void* memoryLocation)
 *
 *	Destroy: none
 *	
-**********************************************************************/
+********************************************************************************/
 
 NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 {
@@ -221,7 +221,7 @@ NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 	
 }
 
-/*********************************************************************
+/********************************************************************************
 * Destroy/Delete an AVL tree which contains header inside
 *
 *	Input: root			the root of the AVL tree
@@ -229,7 +229,7 @@ NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 *
 *	Destroy: none
 *	
-**********************************************************************/
+********************************************************************************/
 void destroyHeaderAVL(NodeHeader *root)
 {
 	if(root==NULL)
@@ -265,7 +265,7 @@ void destroyHeaderAVL(NodeHeader *root)
 	
 }
 
-/*********************************************************************
+/*********************************************************************************
 * Find a space from the AVL which suitable to allocate certain memory
 *
 *	Input: root			the root of the AVL tree
@@ -275,7 +275,7 @@ void destroyHeaderAVL(NodeHeader *root)
 *
 *	Destroy: none
 *	
-**********************************************************************/
+*********************************************************************************/
 
 NodeHeader *findSpace(NodeHeader *root,int size)
 {
