@@ -40,7 +40,8 @@ void test_avlAddHeader_will_add_a_new_element_into_the_rightChild_of_the_root(vo
 	TEST_ASSERT_EQUAL(&testHeader2,getHeaderAddress(testRoot->rightChild));
 }
 
-
+//Since avlAddHeader work according to the rules.
+//Done on the macro implementation.
 
 
 
