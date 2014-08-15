@@ -142,6 +142,42 @@ void test_allocatedMemory_will_update_the_pools_correctly_when_three_part_of_mem
 	TEST_ASSERT_EQUAL(200,getMemorySize(allocatedPool->rightChild));
 	destroyMemory();
 }
+void test_allocateMemory_will_return_NULL_when_the_input_size_is_bigger_than_the_MEMORY_SIZE()
+{
+	initialization();
+	//findBlock_ExpectAndReturn (100,theMemoryPool);
+	void  *testAllocateData;
+	testAllocateData = allocateMemory(MEMORY_SIZE+50);
+	TEST_ASSERT_NULL(testAllocateData);
+	destroyMemory();
+	
+}
+
+void test_allocateMemory_will_return_NULL_when_all_of_the_memory_been_allocated()
+{
+	initialization();
+	//findBlock_ExpectAndReturn (100,theMemoryPool);
+	void  *testAllocateData;
+	testAllocateData = allocateMemory(MEMORY_SIZE);
+	TEST_ASSERT_EQUAL(theMemoryPool,testAllocateData);
+	testAllocateData = allocateMemory(50);
+	TEST_ASSERT_NULL(testAllocateData);
+	destroyMemory();
+}
+
+void test_allocateMemory_will_return_NULL_when_there_are_no_suitable_address()
+{
+	initialization();
+	//findBlock_ExpectAndReturn (100,theMemoryPool);
+	void  *testAllocateData;
+	testAllocateData = allocateMemory(MEMORY_SIZE-50);
+	TEST_ASSERT_EQUAL(theMemoryPool,testAllocateData);
+	//Now the freePool is only consisted 50 memory space.
+	testAllocateData = allocateMemory(100);
+	TEST_ASSERT_NULL(testAllocateData);
+	destroyMemory();
+}
+
 //allocateMemory test will be added in future.
 
 void test_deallocateMemory_will_remove_the_node_from_the_allocatedPool_and_merge_back_to_the_freePool()
@@ -484,7 +520,6 @@ void test_deallocateMemory_and_allocateMemory_at_the_same_time_will_not_affect_t
 	
 	destroyMemory();
 }
-
 
 
 

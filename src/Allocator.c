@@ -66,6 +66,10 @@ void destroyMemory()
 **********************************************************************/
 void *allocateMemory(int size)
 {
+	if(size>MEMORY_SIZE||freePool==NULL)
+	{
+		return NULL;
+	}
 	void * freeSpace =NULL;
 	
 	NodeHeader *tempNode=NULL;
@@ -84,11 +88,13 @@ void *allocateMemory(int size)
 	
 	
 	allocatedPool = avlAddHeader(allocatedPool, newAllocatedNode);
-	/**************************************************************************
-	
-							Done on allocatedPool
-							
-	***************************************************************************/
+	/**
+	############################################################################
+	#                                                                          #
+	#						Done on allocatedPool                              #
+	#						                                                   #
+	############################################################################
+	**/
 	
 	//Starting on the freePool
 	tempNode = findSpace(freePool,size);
@@ -109,11 +115,13 @@ void *allocateMemory(int size)
 		avlRemoveHeader(&freePool, tempNode);
 	}
 
-	/**************************************************************************
-	
-							End of editing freePool
-							
-	***************************************************************************/
+	/**
+	############################################################################
+	#                                                                          #
+	#						End of editing freePool                            #
+	#						                                                   #
+	############################################################################
+	**/
 	return getMemoryAddress(newAllocatedNode);
 	
 }
@@ -131,7 +139,10 @@ void deallocateMemory(void* memoryLocation)
 	int size = getMemorySize(allocatedPool);
 	NodeHeader * newFreePoolNode=NULL;
 	NodeHeader * checkNode=NULL;
-	
+	if(memoryLocation==NULL)
+	{
+		return;
+	}
 	//Edit allocatedPool 
 	MemoryBlockHeader tempHeader={.address=memoryLocation};
 	NodeHeader tempNode = {.data = &tempHeader};
@@ -141,7 +152,14 @@ void deallocateMemory(void* memoryLocation)
 		return;
 	}
 	newFreePoolNode = avlRemoveHeader(&allocatedPool, newFreePoolNode);
-	//Done for allocatedPool
+	/**
+	############################################################################
+	#                                                                          #
+	#						Done on allocatedPool                              #
+	#						                                                   #
+	############################################################################
+	**/
+	
 	//Make sure the Node contain no child (Those child already handle by the function)
 	newFreePoolNode->leftChild = NULL;
 	newFreePoolNode->rightChild = NULL;
@@ -172,7 +190,13 @@ void deallocateMemory(void* memoryLocation)
 			freePool =avlAddHeader(freePool,newFreePoolNode);
 	}
 	
-	//Done for freePool
+	/**
+	############################################################################
+	#                                                                          #
+	#						End of editing freePool                            #
+	#						                                                   #
+	############################################################################
+	**/
 }
 
 /*********************************************************************
