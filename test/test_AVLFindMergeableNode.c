@@ -1,8 +1,8 @@
 #include "unity.h"
-
+#include "Allocator.h"
 #include "manageAVL.h"
-
-
+#include "AVLAddress.h"
+#include "SupportiveFunction.h"
 void setUp(void)
 {
 }
@@ -11,7 +11,7 @@ void tearDown(void)
 {
 }
 
-void test_avlFindNode_will_find_the_element_that_being_in_front_of_the_node()
+void test_avlFindNode_will_find_the_element_that_being_in_front_of_the_target_node()
 {
 	MemoryBlockHeader testHeader1={.address=(void*)100,.size=200};
 	MemoryBlockHeader testHeader2={.address=(void*)500,.size=100};
@@ -37,7 +37,7 @@ void test_avlFindNode_will_find_the_element_that_being_in_front_of_the_node()
 }
 
 
-void test_avlFindNode_will_find_the_element_that_being_back_of_the_node()
+void test_avlFindNode_will_find_the_element_that_being_back_of_the_target_node()
 {
 	MemoryBlockHeader testHeader1={.address=(void*)750,.size=200};
 	MemoryBlockHeader testHeader2={.address=(void*)500,.size=100};
@@ -53,7 +53,7 @@ void test_avlFindNode_will_find_the_element_that_being_back_of_the_node()
 	
 	testRoot1 = avlFindNode(testRoot,&realData3);
 	
-	//since realData3 contain address of 600 and end in 750, node that contain 600 as end and 750 as start should be returned.
+	//since realData3 contain address of 600 and end in 750, node that contain 600 as end or 750 as start should be returned.
 	TEST_ASSERT_NOT_NULL(testRoot1);
 	TEST_ASSERT_EQUAL(750,getMemoryAddress(testRoot1));
 	TEST_ASSERT_EQUAL(200,getMemorySize(testRoot1));

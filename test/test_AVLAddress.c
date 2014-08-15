@@ -4,6 +4,7 @@
 #include "Allocator.h"
 #include "mock_SupportiveFunction.h"
 
+//Define this macro to access to the data without typing alot of type casting.
 #define getHeaderAddress(node)	(((MemoryBlockHeader*)(node)->data))
 
 void setUp(void)
