@@ -77,8 +77,13 @@ void *allocateMemory(int size)
 	NodeHeader *newAllocatedNode= malloc(sizeof(NodeHeader));
 	MemoryBlockHeader *newAllocatedHeader= malloc(sizeof(MemoryBlockHeader));
 	
-	freeSpace = findBlock(size);
-	
+	freeSpace = findBlock(size); //Get the suitable address.
+	if(freeSpace==NULL)
+	{
+		free(newAllocatedHeader);
+		free(newAllocatedNode);
+		return NULL;
+	}
 	newAllocatedHeader->address = freeSpace;
 	newAllocatedHeader->size = size;
 	newAllocatedNode->data = newAllocatedHeader;
@@ -97,7 +102,7 @@ void *allocateMemory(int size)
 	**/
 	
 	//Starting on the freePool
-	tempNode = findSpace(freePool,size);
+	tempNode = findSpace(freePool,size); //Get the respective node.
 	if(tempNode==NULL)
 	{
 		avlRemoveHeader(&allocatedPool, newAllocatedNode);

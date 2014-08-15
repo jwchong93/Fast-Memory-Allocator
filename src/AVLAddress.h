@@ -15,7 +15,8 @@ struct NodeHeader{
 #define avlAddHeader(root, nodeToAdd) (NodeHeader*)avlAdd((Node *)(root), (Node *)(nodeToAdd), compareHeader)
 #define avlRemoveHeader(root, nodeToRemove) (NodeHeader*)AVLRemove((Node **) (root),(Node *)(nodeToRemove),compareHeader)
 #define avlFindHeader(root,data) (NodeHeader*)AVLFind((Node *)(root),(Node *) (data),compareHeader)
-#define avlFindNode(root,data) (NodeHeader*)AVLFind((Node *)(root),(Node *) (data),compareNode)
+//The test for this macro done on test_AVLFindMergeableNode.c
+#define avlFindNode(root,data) (NodeHeader*)AVLFind((Node *)(root),(Node *) (data),compareNode)  
 
 //To compare the address of the node to find out bigger smaller or equal.
 int compareHeader(void *nodeInTree, void *nodeToCompare);

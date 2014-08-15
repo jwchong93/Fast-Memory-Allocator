@@ -3,8 +3,10 @@
 #include <stdio.h>
 
 /**********************************************************************
-* Find a suitable memory location from theMemoryPool(global variable)
+* 	Find a suitable memory location from theMemoryPool(global variable)
 *	which can fit certain size
+*
+*	This function rely on AVLFindSpace()
 *
 *	Input: size								the size of the memory going to be allocated
 *	Output: getMemoryAddress(tempNode)		the address that suitable for allocation

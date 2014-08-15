@@ -491,12 +491,48 @@ void test_deallocateMemory_and_allocateMemory_at_the_same_time_will_not_affect_t
 	testAllocateData3 = allocateMemory(150);
 	testAllocateData4 = allocateMemory(75);
 	
+	/*
+	
+	|50 |
+	|100|
+	|150|
+	|75 |
+	(125)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
 	deallocateMemory(testAllocateData2);
+	/*
+		Current status:
+	
+	|50 |
+	(100)
+	|150|
+	|75 |
+	(125)
+	
+	()freeMemory
+	||allocatedMemory
+	*/
 	TEST_ASSERT_EQUAL(theMemoryPool+375,getMemoryAddress(freePool));
 	TEST_ASSERT_EQUAL(125,getMemorySize(freePool));
 	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
 	TEST_ASSERT_EQUAL(100,getMemorySize(freePool->leftChild));
 	testAllocateData2 = allocateMemory(100);
+	/*
+		Current status:
+	
+	|50 |
+	(100)
+	|150|
+	|75 |
+	|100|
+	(25 )
+	
+	()freeMemory
+	||allocatedMemory
+	*/
 	TEST_ASSERT_EQUAL(theMemoryPool+475,getMemoryAddress(freePool));
 	TEST_ASSERT_EQUAL(25,getMemorySize(freePool));
 	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
@@ -504,6 +540,19 @@ void test_deallocateMemory_and_allocateMemory_at_the_same_time_will_not_affect_t
 	TEST_ASSERT_NULL(freePool->rightChild);
 	
 	deallocateMemory(testAllocateData4);
+	/*
+		Current status:
+	
+	|50 |
+	(100)
+	|150|
+	(75 )
+	|100|
+	(25 )
+	
+	()freeMemory
+	||allocatedMemory
+	*/
 	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
 	TEST_ASSERT_EQUAL(75,getMemorySize(freePool));
 	TEST_ASSERT_EQUAL(theMemoryPool+50,getMemoryAddress(freePool->leftChild));
@@ -512,6 +561,19 @@ void test_deallocateMemory_and_allocateMemory_at_the_same_time_will_not_affect_t
 	TEST_ASSERT_EQUAL(25,getMemorySize(freePool->rightChild));
 	
 	testAllocateData4 = allocateMemory(100);
+	/*
+		Current status:
+	
+	|50 |
+	|100|
+	|150|
+	|75 |
+	|100|
+	(25 )
+	
+	()freeMemory
+	||allocatedMemory
+	*/
 	TEST_ASSERT_EQUAL(theMemoryPool+300,getMemoryAddress(freePool));
 	TEST_ASSERT_EQUAL(75,getMemorySize(freePool));
 	TEST_ASSERT_EQUAL(theMemoryPool+475,getMemoryAddress(freePool->rightChild));
@@ -519,6 +581,8 @@ void test_deallocateMemory_and_allocateMemory_at_the_same_time_will_not_affect_t
 	
 	
 	destroyMemory();
+	
+	//From different combination of allocate and deallocate, the freePool and allocatedPool still update as expected.
 }
 
 
