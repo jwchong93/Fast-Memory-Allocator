@@ -219,10 +219,10 @@ NodeHeader *mergeMemoryBlock(NodeHeader*targetNode,NodeHeader *nodeToMerge)
 
 	getMemorySize(targetNode)+=getMemorySize(nodeToMerge);
 	
-	if(getMemoryAddress(targetNode)>getMemoryAddress(nodeToMerge))
-	{
-		//getMemoryAddress(targetNode)=getMemoryAddress(nodeToMerge);
-	}
+	//if(getMemoryAddress(targetNode)>getMemoryAddress(nodeToMerge))
+	//{
+		getMemoryAddress(targetNode)=getMemoryAddress(nodeToMerge);
+//	}
 	free(nodeToMerge);
 	
 	return targetNode;
