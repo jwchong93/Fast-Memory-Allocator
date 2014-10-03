@@ -28,7 +28,7 @@
 		the data store in this format: 	*Node* contain *Header*
 										*Header* contain *Address*
 */
-#define getMemoryAddress(node)	(((MemoryBlockHeader*)(((NodeHeader *)(node))->data))->address)
+#define getMemoryAddress(node)	(((MemoryBlockHeader*)((NodeHeader *)(node))->data)->address)
 /*
 
 	getMemorySize(node) will access to the Size in the Header. 
