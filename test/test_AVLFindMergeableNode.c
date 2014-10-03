@@ -61,7 +61,7 @@ void test_avlFindNode_will_find_the_element_that_being_back_of_the_target_node()
 	//where this node can merge with the realData3
 }
 
-/*
+
 void test_mergeMemoryBlock_will_merge_two_nodes_into_one_for_the_first_node_address_is_smaller_than_the_second_node()
 {
 	MemoryBlockHeader testHeader1={.address=(void*)300,.size=200};
@@ -77,7 +77,7 @@ void test_mergeMemoryBlock_will_merge_two_nodes_into_one_for_the_first_node_addr
 	//size = 200+100
 	TEST_ASSERT_EQUAL(300,getMemorySize(testRoot1));
 }
-
+/*
 void test_mergeMemoryBlock_will_merge_two_nodes_into_one_for_the_first_node_address_is_bigger_than_the_second_node()
 {
 	MemoryBlockHeader testHeader1={.address=(void*)500,.size=100};
