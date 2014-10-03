@@ -1,13 +1,14 @@
 #ifndef AVLAddress_H
 #define AVLAddress_H
 #include "manageAVL.h"
+typedef struct NodeHeader NodeHeader;
 
-struct NodeHeader_t{
+struct NodeHeader{
   int balance;
-  struct NodeHeader_t *leftChild;
-  struct NodeHeader_t *rightChild;
+  NodeHeader *leftChild;
+  NodeHeader *rightChild;
   void *data;
-}NodeHeader;
+};
 
 //Define some macro to implement the AVL tree program into different cases which require different rule to compare.
 
