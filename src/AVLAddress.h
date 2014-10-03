@@ -2,12 +2,12 @@
 #define AVLAddress_H
 #include "manageAVL.h"
 typedef struct NodeHeader NodeHeader;
-#include "Allocator.h"
+
 struct NodeHeader{
   int balance;
   NodeHeader *leftChild;
   NodeHeader *rightChild;
-  MemoryBlockHeader *data;
+  void *data;
 };
 
 //Define some macro to implement the AVL tree program into different cases which require different rule to compare.
