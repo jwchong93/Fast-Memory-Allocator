@@ -35,7 +35,7 @@ void test_avlFindNode_will_find_the_element_that_being_in_front_of_the_target_no
 	//start location = 500 + 100(size)=600
 	//returned a correct node.
 }
-
+/*
 
 void test_avlFindNode_will_find_the_element_that_being_back_of_the_target_node()
 {
@@ -94,3 +94,4 @@ void test_mergeMemoryBlock_will_merge_two_nodes_into_one_for_the_first_node_addr
 	TEST_ASSERT_EQUAL(300,getMemorySize(testRoot1));
 }
 
+*/
