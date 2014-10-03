@@ -2,7 +2,7 @@
 #define AVLAddress_H
 #include "manageAVL.h"
 typedef struct NodeHeader NodeHeader;
-
+#include "Allocator.h"
 struct NodeHeader{
   int balance;
   NodeHeader *leftChild;
