@@ -7,7 +7,7 @@ struct NodeHeader{
   int balance;
   NodeHeader *leftChild;
   NodeHeader *rightChild;
-  void *data;
+  MemoryBlockHeader *data;
 };
 
 //Define some macro to implement the AVL tree program into different cases which require different rule to compare.
